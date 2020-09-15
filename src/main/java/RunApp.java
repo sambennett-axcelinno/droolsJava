@@ -1,18 +1,4 @@
 import com.pnmac.pam.data.model.v3.loan.Loan;
-import org.kie.api.KieServices;
-import org.kie.api.builder.ReleaseId;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieRuntime;
-import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.process.ProcessInstance;
-import org.kie.api.runtime.rule.FactHandle;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
 
 public class RunApp {
 
