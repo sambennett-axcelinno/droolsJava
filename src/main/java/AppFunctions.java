@@ -60,7 +60,7 @@ public class AppFunctions {
         return sum;
     }
 
-    public Double calculateCDMonthlyAmount(Double interestRate, Integer numOfPayments, Double loanAmount) {
+    public Double calculateTwelveMonthAverage(Double interestRate, Integer numOfPayments, Double loanAmount) {
         List<Double> remainingBalanceList = new ArrayList<Double>();
         Double moveRateDecimalPlace = interestRate/100;
         Double rateDivide = moveRateDecimalPlace/12;

@@ -24,6 +24,6 @@ public class RunApp {
         System.out.println(Utils.formatDouble(pmt));
         System.out.println(Utils.formatDouble(ppmt));
         System.out.println(2.75/100);
-        System.out.println(appFunctions.calculateCDMonthlyAmount(2.75, 360, 152575.0));
+        System.out.println(appFunctions.calculateTwelveMonthAverage(2.75, 360, 152575.0));
     }
 }
