@@ -66,12 +66,10 @@ public class AppFunctions {
         Double rateDivide = moveRateDecimalPlace/12;
         Double ppmt = (-1*Finance.ppmt(rateDivide, 1, numOfPayments, loanAmount));
         Double remainingBalance = loanAmount - ppmt;
-        System.out.println(remainingBalance);
         remainingBalanceList.add(remainingBalance);
         for (int i = 2; i <= 12; i++) {
             ppmt = (-1*Finance.ppmt(rateDivide, i, numOfPayments, loanAmount));
             remainingBalance = remainingBalance - ppmt;
-            System.out.println(remainingBalance);
             remainingBalanceList.add(remainingBalance);
         }
 
