@@ -1,6 +1,12 @@
 import com.pnmac.pam.data.model.v3.loan.Loan;
+import com.pnmac.pam.data.model.v3.loan.tpo.TPO;
+import com.pnmac.pam.data.model.v3.loan.work.Work;
+import com.pnmac.pam.data.model.v3.loan.work.events.Events;
 import org.apache.poi.ss.formula.functions.Finance;
 import com.pnmac.pam.utils.Utils;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class RunApp {
 
@@ -25,5 +31,13 @@ public class RunApp {
         System.out.println(Utils.formatDouble(ppmt));
         System.out.println(2.75/100);
         System.out.println(appFunctions.calculateTwelveMonthAverage(2.75, 360, 152575.0));
+
+        Loan loan1 = new Loan();
+        loan1.setTpo(new TPO());
+        loan1.getTpo().setUnderwritingDelegated(true);
+        loan1.setWork(new Work());
+        loan1.getWork().setEvents(new Events());
+        loan1.getWork().getEvents().setDocIndexingCompleteStatusChangeAt(ZonedDateTime.parse("2020-09-27T23:59:00+00:00"));
+        System.out.println(appFunctions.delPipelineProtectionHelper(loan1, "2020-09-24T23:59:00+00:00"));
     }
 }

@@ -9,6 +9,7 @@ import org.kie.api.runtime.rule.FactHandle;
 import org.apache.poi.ss.formula.functions.Finance;
 import com.pnmac.pam.utils.Utils;
 
+import java.time.ZonedDateTime;
 import java.util.*;
 
 public class AppFunctions {
@@ -77,5 +78,48 @@ public class AppFunctions {
         remainingBalanceAverage = Utils.formatDouble(remainingBalanceAverage);
 
         return remainingBalanceAverage;
+    }
+
+    public Boolean delPipelineProtectionHelper(Loan loan, String date) {
+        if (loan == null) {
+            return null;
+        }
+        if (loan.getWork() == null || loan.getTpo() == null) {
+            return false;
+        }
+        if (loan.getWork() != null && loan.getWork().getEvents() == null) {
+            return false;
+        }
+        if (loan.getWork() != null && loan.getWork().getEvents() != null) {
+            if (loan.getTpo().getUnderwritingDelegated() != null && loan.getTpo().getUnderwritingDelegated()) {
+                if (loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt() != null) {
+                    return loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt().isAfter(ZonedDateTime.parse(date));
+                }
+            }
+            else if (loan.getTpo().getUnderwritingDelegated() != null && !loan.getTpo().getUnderwritingDelegated()) {
+                if (loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt() != null) {
+                    return loan.getWork().getEvents().getEligibilityDocIndexingCompleteStatusChangeAt().isAfter(ZonedDateTime.parse(date));
+                }
+            }
+        }
+        return false;
+    }
+
+    public Boolean nonDelPipelineProtectionHelper(Loan loan, String date) {
+        if (loan == null) {
+            return null;
+        }
+        if (loan.getWork() == null || loan.getTpo() == null) {
+            return false;
+        }
+        if (loan.getWork() != null && loan.getWork().getEvents() == null) {
+            return false;
+        }
+        if (loan.getWork() != null && loan.getWork().getEvents() != null) {
+            if (loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt() != null) {
+                return loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt().isAfter(ZonedDateTime.parse(date));
+            }
+        }
+        return false;
     }
 }
