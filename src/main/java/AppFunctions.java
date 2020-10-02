@@ -10,6 +10,8 @@ import org.apache.poi.ss.formula.functions.Finance;
 import com.pnmac.pam.utils.Utils;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class AppFunctions {
@@ -80,24 +82,27 @@ public class AppFunctions {
         return remainingBalanceAverage;
     }
 
+    public boolean isValidIsoDateTime(String date) {
+        try {
+            DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(date);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
     public Boolean delPipelineProtectionHelper(Loan loan, String date) {
         if (loan == null) {
             return null;
         }
-        if (loan.getWork() == null || loan.getTpo() == null) {
-            return false;
-        }
-        if (loan.getWork() != null && loan.getWork().getEvents() == null) {
-            return false;
-        }
-        if (loan.getWork() != null && loan.getWork().getEvents() != null) {
-            if (loan.getTpo().getUnderwritingDelegated() != null && loan.getTpo().getUnderwritingDelegated()) {
-                if (loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt() != null) {
+        if (loan.getTpo() != null && loan.getTpo().getUnderwritingDelegated() != null && loan.getWork() != null && loan.getWork().getEvents() != null) {
+            if (loan.getTpo().getUnderwritingDelegated()) {
+                if (loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt() != null && isValidIsoDateTime(date)) {
                     return loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt().isAfter(ZonedDateTime.parse(date));
                 }
             }
-            else if (loan.getTpo().getUnderwritingDelegated() != null && !loan.getTpo().getUnderwritingDelegated()) {
-                if (loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt() != null) {
+            else if (!loan.getTpo().getUnderwritingDelegated()) {
+                if (loan.getWork().getEvents().getEligibilityDocIndexingCompleteStatusChangeAt() != null && isValidIsoDateTime(date)) {
                     return loan.getWork().getEvents().getEligibilityDocIndexingCompleteStatusChangeAt().isAfter(ZonedDateTime.parse(date));
                 }
             }
@@ -109,14 +114,8 @@ public class AppFunctions {
         if (loan == null) {
             return null;
         }
-        if (loan.getWork() == null || loan.getTpo() == null) {
-            return false;
-        }
-        if (loan.getWork() != null && loan.getWork().getEvents() == null) {
-            return false;
-        }
         if (loan.getWork() != null && loan.getWork().getEvents() != null) {
-            if (loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt() != null) {
+            if (loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt() != null && isValidIsoDateTime(date)) {
                 return loan.getWork().getEvents().getDocIndexingCompleteStatusChangeAt().isAfter(ZonedDateTime.parse(date));
             }
         }

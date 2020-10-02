@@ -4,6 +4,7 @@ import com.pnmac.pam.data.model.v3.loan.work.Work;
 import com.pnmac.pam.data.model.v3.loan.work.events.Events;
 import org.apache.poi.ss.formula.functions.Finance;
 import com.pnmac.pam.utils.Utils;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +34,7 @@ public class RunApp {
         System.out.println(appFunctions.calculateTwelveMonthAverage(2.75, 360, 152575.0));
 
         Loan loan1 = new Loan();
-        loan1.setTpo(new TPO());
+        //loan1.setTpo(new TPO());
         loan1.getTpo().setUnderwritingDelegated(true);
         loan1.setWork(new Work());
         loan1.getWork().setEvents(new Events());
