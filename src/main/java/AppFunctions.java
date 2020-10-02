@@ -82,7 +82,7 @@ public class AppFunctions {
         return remainingBalanceAverage;
     }
 
-    public boolean isValidIsoDateTime(String date) {
+    public Boolean isValidIsoDateTime(String date) {
         try {
             DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(date);
             return true;
