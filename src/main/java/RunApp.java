@@ -35,10 +35,11 @@ public class RunApp {
 
         Loan loan1 = new Loan();
         //loan1.setTpo(new TPO());
-        loan1.getTpo().setUnderwritingDelegated(true);
+        loan1.getTpo().setUnderwritingDelegated(false);
         loan1.setWork(new Work());
         loan1.getWork().setEvents(new Events());
-        loan1.getWork().getEvents().setDocIndexingCompleteStatusChangeAt(ZonedDateTime.parse("2020-09-27T23:59:00+00:00"));
+        //loan1.getWork().getEvents().setDocIndexingCompleteStatusChangeAt(ZonedDateTime.parse("2020-09-27T23:59:00+00:00"));
+        loan1.getWork().getEvents().setEligibilityDocIndexingCompleteStatusChangeAt(ZonedDateTime.parse("2020-09-27T23:59:00+00:00"));
         System.out.println(appFunctions.delPipelineProtectionHelper(loan1, "2020-09-24T23:59:00+00:00"));
     }
 }
